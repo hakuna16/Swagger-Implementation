@@ -34,4 +34,10 @@ public class BookController {
         log.info("Adding book information");
         return bookService.addBook(book);
     }
+    
+    @RequestMapping(value = "/{name}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON)
+    public Book updateBook(Book book) {
+        log.info("Adding book information");
+        return bookService.addBook(book);
+    }
 }

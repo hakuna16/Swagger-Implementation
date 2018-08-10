@@ -13,10 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/books")
 @Slf4j
-public class Books {
+public class BookController {
 
-    @RequestMapping(value = "/book/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+    @RequestMapping(value = "/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
     public String  getBooks(@PathVariable("name") final String name){
-        return "Hi from book Apias name: " + name;
+        log.info("Getting book information of: {}", name);
+        return null;
     }
 }

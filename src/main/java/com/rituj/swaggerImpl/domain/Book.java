@@ -1,9 +1,11 @@
 package com.rituj.swaggerImpl.domain;
 
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 @Data
-@Slf4j
 public class Book {
+    private Integer bookId;
+    private String bookName;
+    private String bookAuthour;
+    private String bookQuantity;
 }

@@ -21,4 +21,8 @@ public class BookService {
     public Book addBook(Book book){
         return bookRepository.addBook(book);
     }
+    
+    public Book updateBook(Book book){
+        return bookRepository.updateBook(book);
+    }
 }

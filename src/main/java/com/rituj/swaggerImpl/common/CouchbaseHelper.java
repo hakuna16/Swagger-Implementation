@@ -84,5 +84,4 @@ public class CouchbaseHelper {
         String id = DocumentIdGenerator.generateRandomUniqueId(document.getClass());
         return bucket.insert(JsonDocument.create(id, cbJsonObjectTransformer.toJsonObject(document)));
     }
-    
 }

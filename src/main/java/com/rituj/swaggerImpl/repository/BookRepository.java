@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.Assert;
 
 import com.couchbase.client.java.Bucket;
+import com.couchbase.client.java.document.JsonDocument;
 import com.couchbase.client.java.query.N1qlQuery;
 import com.couchbase.client.java.query.N1qlQueryResult;
 import com.couchbase.client.java.query.N1qlQueryRow;
@@ -38,5 +38,15 @@ public class BookRepository {
 
     public Book addBook(final Book book) {
         return transformer.toObject(couchbaseHelper.createDocument(bucket, book), Book.class);
+    }
+
+    public Book updateBook(Book book) {
+        String statement = "Select meta().id from `" + bucket.name() + "` where bookId=" + book.getBookId();
+        N1qlQueryResult n1qlQueryResult = bucket.query(N1qlQuery.simple(statement));
+        List<N1qlQueryRow> bookRows = n1qlQueryResult.allRows();
+        List<String> booksIds = new ArrayList<>();
+        bookRows.forEach(item -> booksIds.add(item.value().getString("id")));
+        booksIds.forEach(id -> bucket.mutateIn(id).upsert("bookQuantity", book.getBookQuantity()).execute());
+        return transformer.toObject(couchbaseHelper.getJsonDocument(bucket, booksIds.get(0)), Book.class);
     }
 }
